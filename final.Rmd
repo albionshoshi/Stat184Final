@@ -1,0 +1,10 @@
+---
+title: "Jordan vs Lebron"
+author: "Albion Shoshi"
+date: "April 5, 2024"
+output: pdf_document
+geometry: left=0.5in,right=0.5in,top=0.5in,bottom=0.5in
+urlcolor: blue
+---
+
+yo was good
