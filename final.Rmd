@@ -1,10 +1,34 @@
 ---
-title: "Jordan vs Lebron"
-author: "Albion Shoshi"
+title: "Jordan V. Lebron"
+author: "Xiang Jiang and Albion Shoshi"
 date: "April 5, 2024"
 output: pdf_document
 geometry: left=0.5in,right=0.5in,top=0.5in,bottom=0.5in
 urlcolor: blue
 ---
 
-yo was good
+```{r setupFiles, include = FALSE}
+# This template file is based off of a template created by Alex Hayes
+# https://github.com/alexpghayes/rmarkdown_homework_template
+
+# Setting Document Options
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+```
+
+```{r}
+library(dplyr)
+library(readr)
+library(tidyverse)
+```
+
+```{r}
+
+KobeStat <- read_csv('path_to_file/kobe_stats.csv')
+LebronStat <- read_csv('path_to_file/lebron_stats.csv')
+```
+
