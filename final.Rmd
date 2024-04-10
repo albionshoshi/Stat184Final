@@ -25,6 +25,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(readr)
 library(tidyverse)
+library(rvest)
 ```
 
 ```{r}
@@ -38,8 +39,29 @@ GameHighStat <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/game_h
 Totals <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/totals_stats.csv')
 ```
 ```{r}
+Data_1 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_2 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+Data_3 <- "https://www.nba.com/stats/leaders?Season=1986-87&SeasonType=Regular+Season"
+Data_4 <- "https://www.nba.com/stats/leaders?Season=1987-88&SeasonType=Regular+Season"
+Data_5 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_6 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+Data_7 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_8 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+Data_9 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_10 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+Data_11 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_12 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+Data_13 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_14 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+Data_15 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+Season"
+Data_16 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
+```
+
+
+```{r}
 # Guiding Question: Who is the Greatest Basketball Player of All Time in NBA History?
-# Data retrieved from: https://www.kaggle.com/datasets/xvivancos/michael-jordan-kobe-bryant-and-lebron-james-stats?resource=download&select=advanced_stats.csv
+# Data retrieved from Kaggle.
+
 
 ```
 
