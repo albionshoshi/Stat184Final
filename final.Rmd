@@ -57,11 +57,9 @@ Data_15 <- "https://www.nba.com/stats/leaders?Season=1984-85&SeasonType=Regular+
 Data_16 <- "https://www.nba.com/stats/leaders?Season=1985-86&SeasonType=Regular+Season"
 ```
 
+# Guiding Question: 
+* Who is the Greatest Basketball Player of All Time in NBA History, Lebron or Jordan?
 
-```{r}
-# Guiding Question: Who is the Greatest Basketball Player of All Time in NBA History?
-# Data retrieved from Kaggle.
-
-
-```
-
+# Become acquainted with your data sources:
+* Data retrieved from Kaggle.
+* 
