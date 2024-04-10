@@ -21,14 +21,25 @@ knitr::opts_chunk$set(
 ```
 
 ```{r}
+# Import libraries and data here
 library(dplyr)
 library(readr)
 library(tidyverse)
 ```
 
 ```{r}
+# Downloaded Data from Kaggle
+AllStarGamesStats <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/allstar_games_stats.csv')
+PerGameStats <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/per_game_stats.csv')
+AdancedStat <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/advanced_stats.csv')
+Salaries <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/salaries.csv')
+AllGameStat <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/allgames_stats.csv')
+GameHighStat <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/game_highs_stats.csv')
+Totals <- read_csv('/Users/xiangjiang/Documents/GitHub/Stat184Final/totals_stats.csv')
+```
+```{r}
+# Guiding Question: Who is the Greatest Basketball Player of All Time in NBA History?
+# Data retrieved from: https://www.kaggle.com/datasets/xvivancos/michael-jordan-kobe-bryant-and-lebron-james-stats?resource=download&select=advanced_stats.csv
 
-KobeStat <- read_csv('path_to_file/kobe_stats.csv')
-LebronStat <- read_csv('path_to_file/lebron_stats.csv')
 ```
 
