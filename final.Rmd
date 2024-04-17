@@ -242,8 +242,7 @@ Challenge Encountered - Describe the biggest challenge that you encountered and 
 
 The biggest challenge we faced was finding relevant data sources. All the data sources off of Kaggle were old when it comes to finding LeBron's stats. Lebron is still currently playing so we needed up to date statistics while everything on Kaggle was over 5 years behind. We came across the websites basketball reference and Stat head to head which aided us heavily for finding out the statistics we needed and wanted to use.
 
-
-
+yo
 
 
 
