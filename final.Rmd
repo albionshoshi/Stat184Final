@@ -34,19 +34,19 @@ library(esquisse)
 ```{r}
 # Downloaded Lebron Data from BasketBall Reference
 # Link: https://www.basketball-reference.com/players/j/jamesle01.html#per_game
-LebronPerGame <- read_csv('/Users/xiangjiang/Desktop/LebronNew/LebronPerGameNew.csv')
-LebronTotals <- read_csv('/Users/xiangjiang/Desktop/LebronNew/LebronTotalStatsNew.csv')
-LebronAdvanced <- read_csv('/Users/xiangjiang/Desktop/LebronNew/LebronAdvancedNew.csv')
-LebronPer100Poss <- read_csv('/Users/xiangjiang/Desktop/LebronNew/LebronPer100Poss.csv')
-LebronAllStarGames <- read_csv('/Users/xiangjiang/Desktop/LebronNew/LebronAllStarGame.csv')
+LebronPerGame <- read_csv('./LebronNew/LebronPerGameNew.csv')
+LebronTotals <- read_csv('./LebronNew/LebronTotalStatsNew.csv')
+LebronAdvanced <- read_csv('./LebronNew/LebronAdvancedNew.csv')
+LebronPer100Poss <- read_csv('./LebronNew/LebronPer100Poss.csv')
+LebronAllStarGames <- read_csv('./LebronNew/LebronAllStarGame.csv')
 
 # Downloaded Jordan Data from BasketBall Reference
 # Link: https://www.basketball-reference.com/players/j/jordami01.html
-JordanPerGame <- read_csv('/Users/xiangjiang/Desktop/JordanNew/JordanPerGameNew.csv')
-JordanTotals <- read_csv('/Users/xiangjiang/Desktop/JordanNew/JordanTotalStatsNew.csv')
-JordanAdvanced <- read_csv('/Users/xiangjiang/Desktop/JordanNew/JordanAdvancedNew.csv')
-JordanPer100Poss <- read_csv('/Users/xiangjiang/Desktop/JordanNew/JordanPer100Poss.csv')
-JordanAllStarGames <- read_csv('/Users/xiangjiang/Desktop/JordanNew/JordanAllStarGame.csv')
+JordanPerGame <- read_csv('./JordanNew/JordanPerGameNew.csv')
+JordanTotals <- read_csv('./JordanNew/JordanTotalStatsNew.csv')
+JordanAdvanced <- read_csv('./JordanNew/JordanAdvancedNew.csv')
+JordanPer100Poss <- read_csv('./JordanNew/JordanPer100Poss.csv')
+JordanAllStarGames <- read_csv('./JordanNew/JordanAllStarGame.csv')
 ```
 # Guiding Question: 
 * Who is the Greatest Basketball Player of All Time in NBA History, Lebron or Jordan?
@@ -85,7 +85,6 @@ Basketball Reference was launched in April of 2004 by Justin Kubatko. The primar
 # Explore intuition related to the research question
 
 # 1. Comparing Lebron and Jordans total and per-game stats
-
 ## Bargraph showcasing a comparison of per game-stats
 ```{r}
 LebronStatsPerGame <- LebronTotals %>%
@@ -111,7 +110,6 @@ print(StatsComparison)
 LeBron has averaged 27.1 points, 7.4 assists, and 7.5 rebounds per game over the course of his 21 year career. Jordan has averaged 30.1 points, 5.3 assists, and 6.2 rebounds over the course of his 15 year career. Even though Jordan has averaged a higher amount of points, LeBron was never seen as a scorer. LeBron was known for his playmaking and getting his team involved (We can see that with the 7.4 assists), while Jordan was predominantly known as a prolific scorer.
 
 ## Bargraph showcasing a comparison of total stats
-
 ```{r}
 LebronTotalsStats <- LebronTotals %>%
   summarise(Player = "Lebron James", TotalRebounds = sum(TRB, na.rm = TRUE), TotalAssists = sum(AST, na.rm = TRUE), TotalPoints = sum(PTS, na.rm = TRUE))
@@ -135,9 +133,7 @@ print(StatsComparison)
 ```
 LeBron over the course of his 21 years has accumulated 40,474 points, 11,009 assists, and 11,185 total rebounds. Jordan in his 15 years in the league has totaled 32,292 points, 5,633 assists, and 6,672 total rebounds. LeBron has just overtaken Kareem as the all time leading scorer and sits in 4th place for total all time assists while Jordan barely breaks the top five for points and has nowhere near the rebounds and assists to be a leader in the stat. Even though LeBron has played 6 more seasons than Jordan, he is currently putting up 27 points per game for his entire career including this current year at 39 years old. Jordan had to retire at 39 because he was such a liability as a player.
 
-
 # 2. Using Advanced and Per100Poss stats for comparison
-
 ## Dotplot showcasing VORP (Value over replacement player)
 ```{r}
 LebronLongevity <- LebronAdvanced %>%
@@ -164,7 +160,6 @@ CombinedDataLonger %>%
 This bar plot shows an advanced stat, Value over replacement player. This is showing us per 100 possessions each players had accounted for that benefited their team. We can see that Jordans ceiling is higher and has had more instances in his career where his VORP is higher than LeBrons. We can also see that LeBron is way more consistent with his lowest points on the bar plot accounting for his rookie seasons in the NBA when he was 18 coming out of high school. This plot leans both ways with what bias you hold towards either player, but overall we think this shows how valuable LeBron really is to his team.
 
 ## Bargraph showcasing Player Effeciency Ratings (PER)
-
 ```{r}
 PER <- function(x){
   x %>%
@@ -192,7 +187,6 @@ ggplot(PERComparison, aes(x = Player, y = AveragePER, fill = Player)) +
 This graph compares LeBron and Jordans efficiency ratings over the course of their careers when comparing their turnover percentages to their scoring ability. The graph shows that Lebrons per 100 possesions stats makes LeBron a more efficient player.
 
 # 3. Showcasing and comparing LeBron and Jordans Legacys
-
 ## Barpgraph that shows LeBron and Jordans Effeciency ratings above age 30
 ```{r}
 OldBron <- LebronPer100Poss %>%
@@ -219,7 +213,6 @@ ggplot(OldComp, aes(x = Player, y = PER, fill = Player)) +
 This bar graph compares Michael Jordan and LeBrons efficiency's per 100 possessions at age 30 plus. We can clearly see the longevity LeBron holds. When comparing points, assists, rebounds,field goal percentages, and turnover rate, we see that LeBron dominates. At age 39 LeBron is still considered a top player in the NBA while Jordan was a dwindling old man expiring in his puny body.
 
 ## Comparing total all star appearences
-
 ```{r}
 LebronAllStarAppearances <- nrow(LebronAllStarGames)
 JordanAllStarAppearances <- nrow(JordanAllStarGames)
@@ -236,7 +229,6 @@ ggplot(AllStarData, aes(x = Player, y = Appearances, fill = Player)) +
   scale_fill_manual(values = c("Lebron James" = "purple", "Michael Jordan" = "blue"))
 ```
 ```
-
 When it comes to All-Star game appearences Lebron has been slected to one every season he has played in the NBA and sits at the most all-star selections ever. Jordans 15, although impressive, are expected when you are considered one of the greatest of all time. Lebrons Longevity to be able to make it to an all star game 21 years, even at his current age of 39 is unheard of.
 
 
