@@ -228,9 +228,19 @@ ggplot(AllStarData, aes(x = Player, y = Appearances, fill = Player)) +
   labs(title = "All-Star Game Appearances", y = "Number of Appearances", fill = "Player") +
   scale_fill_manual(values = c("Lebron James" = "purple", "Michael Jordan" = "blue"))
 ```
-```
+
 When it comes to All-Star game appearences Lebron has been slected to one every season he has played in the NBA and sits at the most all-star selections ever. Jordans 15, although impressive, are expected when you are considered one of the greatest of all time. Lebrons Longevity to be able to make it to an all star game 21 years, even at his current age of 39 is unheard of.
 
+# Conclusion
+
+Key insight/takeaway about research question - Summarize the key insight, takeaway, conclusion to the research question that motivated your analysis
+
+While studying our data comparing LeBron and Jordan we found that the GOAT debate is closer than we originally thought it was when viewed from a statistical perspective. We couldn’t really conclude who was the greatest player ever with some of the most insightful basketball stats, there were strong cases for both. But because basketball is just more than statistics, a visual eye test might also help you sway a certain direction with who you think is the greatest basketball player of all time. We will still go with LeBron as our GOAT. 
+
+Challenge Encountered - Describe the biggest challenge that you encountered and how you overcame it in the project.
+
+
+The biggest challenge we faced was finding relevant data sources. All the data sources off of Kaggle were old when it comes to finding LeBron's stats. Lebron is still currently playing so we needed up to date statistics while everything on Kaggle was over 5 years behind. We came across the websites basketball reference and Stat head to head which aided us heavily for finding out the statistics we needed and wanted to use.
 
 
 
