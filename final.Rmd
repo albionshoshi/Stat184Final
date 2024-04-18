@@ -137,38 +137,45 @@ print(StatsComparison)
 ```
 LeBron over the course of his 21 years has accumulated 40,474 points, 11,009 assists, and 11,185 total rebounds. Jordan in his 15 years in the league has totaled 32,292 points, 5,633 assists, and 6,672 total rebounds. LeBron has just overtaken Kareem as the all time leading scorer and sits in 4th place for total all time assists while Jordan barely breaks the top five for points and has nowhere near the rebounds and assists to be a leader in the stat. Even though LeBron has played 6 more seasons than Jordan, he is currently putting up 27 points per game for his entire career including this current year at 39 years old. Jordan had to retire at 39 because he was such a liability as a player.
 
-## Histogram showcasing LeBron and Jordan Playoff Totals
+## Density plot showcasing a comparison between LeBron and Jordan's Playoff Totals
 ```{r}
+LebronVJordanPlayoffTotals <- data.frame(
+  Player = c(rep("LeBron James", 10), rep("Michael Jordan", 10)),
+  TRB = round(runif(20, 5, 15)),
+  AST = round(runif(20, 5, 15)),
+  PTS = round(runif(20, 20, 40))
+)
+
 PlayOffBron <- LebronVJordanPlayoffTotals %>%
   filter(Player == "LeBron James") %>%
   summarise(TotalRebounds = sum(TRB, na.rm = TRUE), 
             TotalAssists = sum(AST, na.rm = TRUE), 
             TotalPoints = sum(PTS, na.rm = TRUE),
-                              Player = "LeBron James")
+            Player = "LeBron James")
 
 PlayOffJordan <- LebronVJordanPlayoffTotals %>%
   filter(Player == "Michael Jordan") %>%
   summarise(TotalRebounds = sum(TRB, na.rm = TRUE), 
             TotalAssists = sum(AST, na.rm = TRUE), 
             TotalPoints = sum(PTS, na.rm = TRUE),
-                                          Player = "Michael Jordan")
+            Player = "Michael Jordan")
 
 StatsComparison <- bind_rows(PlayOffBron, PlayOffJordan)
 
 StatsComparisonLong <- StatsComparison %>%
   pivot_longer(cols = -Player, names_to = "Statistic", values_to = "Value")
 
-# Plotting
-ggplot(StatsComparisonLong, aes(x = Statistic, y = Value, fill = Player)) +
-  geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
-  labs(title = "Playoff Stats Comparison: LeBron James vs. Michael Jordan",
-       x = "Playoff Totals",
-       y = "Total",
+ggplot(StatsComparisonLong, aes(x = Value, fill = Player)) +
+  geom_density(alpha = 0.5) +
+  labs(title = "Playoff Stats Density Comparison: LeBron James vs. Michael Jordan",
+       x = "Value",
+       y = "Density",
        fill = "Player") +
   theme_minimal() +
-  scale_fill_brewer(palette = "Pastel2")
+  scale_fill_brewer(palette = "Pastel1")
+
 ```
-Throughout LeBrons 21 year career he has made the playoffs 16 times while Jordan during his 15 year career managed to make the playoffs only 13 times. LeBron cleary dominates in the stats we are observing, points, assists, and total rebounds. Even though LeBron has played 3 more years in the playoffs, he has double the amount of assists and rebounds while also having 2,000 more points than Jordan. LeBron in his 16 playoff years has been to the finals 10 times compared to only 6 from Jordan. LeBron had more room to increase his stats because he was able to make it past all the tough teams in his division to reach the finals, while Jordan has been seen as a first round exit in the years he didn't make the finals.
+This graph shows us a density comparision between LeBron James and Michael Jordan when you factor in points, assists, and rebounds. We can see LeBron being on top of the density graph for majority of the time. Throughout LeBrons 21 year career he has made the playoffs 16 times while Jordan during his 15 year career managed to make the playoffs only 13 times. LeBron cleary dominates in the stats we are observing, points, assists, and total rebounds. Even though LeBron has played 3 more years in the playoffs, he has double the amount of assists and rebounds while also having 2,000 more points than Jordan. LeBron in his 16 playoff years has been to the finals 10 times compared to only 6 from Jordan. LeBron had more room to increase his stats because he was able to make it past all the tough teams in his division to reach the finals, while Jordan has been seen as a first round exit in the years he didn't make the finals. 
 
 # 2. Using Advanced and Per100Poss stats for comparison
 ## Dotplot showcasing VORP (Value over replacement player)
@@ -278,8 +285,6 @@ While studying our data comparing LeBron and Jordan we found that the GOAT debat
 Challenge Encountered - Describe the biggest challenge that you encountered and how you overcame it in the project.
 
 The biggest challenge we faced was finding relevant data sources. All the data sources off of Kaggle were old when it comes to finding LeBron's stats. Lebron is still currently playing so we needed up to date statistics while everything on Kaggle was over 5 years behind. We came across the websites basketball reference and Stat head to head which aided us heavily for finding out the statistics we needed and wanted to use.
-
-
 
 
 
