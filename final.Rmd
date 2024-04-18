@@ -137,7 +137,7 @@ print(StatsComparison)
 ```
 LeBron over the course of his 21 years has accumulated 40,474 points, 11,009 assists, and 11,185 total rebounds. Jordan in his 15 years in the league has totaled 32,292 points, 5,633 assists, and 6,672 total rebounds. LeBron has just overtaken Kareem as the all time leading scorer and sits in 4th place for total all time assists while Jordan barely breaks the top five for points and has nowhere near the rebounds and assists to be a leader in the stat. Even though LeBron has played 6 more seasons than Jordan, he is currently putting up 27 points per game for his entire career including this current year at 39 years old. Jordan had to retire at 39 because he was such a liability as a player.
 
-## graph showcasing LeBron and Jordan Playoff Totals
+## Histogram showcasing LeBron and Jordan Playoff Totals
 ```{r}
 PlayOffBron <- LebronVJordanPlayoffTotals %>%
   filter(Player == "LeBron James") %>%
@@ -168,6 +168,7 @@ ggplot(StatsComparisonLong, aes(x = Statistic, y = Value, fill = Player)) +
   theme_minimal() +
   scale_fill_brewer(palette = "Pastel2")
 ```
+Throughout LeBrons 21 year career he has made the playoffs 16 times while Jordan during his 15 year career managed to make the playoffs only 13 times. LeBron cleary dominates in the stats we are observing, points, assists, and total rebounds. Even though LeBron has played 3 more years in the playoffs, he has double the amount of assists and rebounds while also having 2,000 more points than Jordan. LeBron in his 16 playoff years has been to the finals 10 times compared to only 6 from Jordan. LeBron had more room to increase his stats because he was able to make it past all the tough teams in his division to reach the finals, while Jordan has been seen as a first round exit in the years he didn't make the finals.
 
 # 2. Using Advanced and Per100Poss stats for comparison
 ## Dotplot showcasing VORP (Value over replacement player)
