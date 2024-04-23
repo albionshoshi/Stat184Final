@@ -86,27 +86,21 @@ Basketball Reference was launched in April of 2004 by Justin Kubatko. The primar
 * All-star game appearances (AllStarGameAppearances)
 * Game scores (GameScores)
 
-# Explore intuition related to the research question
+# Initial View of Original Data
 ```{r}
-glimpse(LebronPerGame)
-LebronTotals
-LebronAdvanced
-LebronPer100Poss
-LebronAllStarGames
-JordanPerGame
-JordanTotals
-JordanAdvanced
-JordanPer100Poss
-JordanAllStarGames
-LebronVJordanPlayoffTotals
+head(LebronPerGame, 5)
+head(LebronTotals, 5)
+head(LebronAdvanced, 5)
+head(LebronPer100Poss, 5)
+head(LebronAllStarGames, 5)
+head(JordanPerGame, 5)
+head(JordanTotals, 5)
+head(JordanAdvanced, 5)
+head(JordanPer100Poss, 5)
+head(JordanAllStarGames, 5)
+head(LebronVJordanPlayoffTotals, 5)
 ```
-
-
-
-
-
-
-
+# Explore intuition related to the research question
 # 1. Comparing Lebron and Jordans total and per-game stats
 ## Bargraph showcasing a comparison of per game-stats
 ```{r}
@@ -220,7 +214,8 @@ ggplot(CombinedDataLonger, aes(x = PlayerName, y = Value, color = PlayerName)) +
   scale_color_hue(direction = 1) +
   theme_minimal() +
   facet_wrap(~Statistic, scales = "free_y") +
-  labs(title = "Player Performance Analysis", subtitle = "Comparison of LeBron James and Michael Jordan", x = "Player Name", y = "Value")
+  labs(title = "Player Performance Analysis", subtitle = "Comparison of LeBron James and Michael Jordan", x = "Player Name", y = "Value") +
+  theme(text = element_text(size = 12), axis.title = element_text(size = 16), axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "bottom")
 
 print(CombinedDataLonger)
 ```
@@ -281,7 +276,7 @@ Challenge Encountered - Describe the biggest challenge that you encountered and 
 
 The biggest challenge we faced was finding relevant data sources. All the data sources off of Kaggle were old when it comes to finding LeBron's stats. Lebron is still currently playing so we needed up to date statistics while everything on Kaggle was over 5 years behind. We came across the websites basketball reference and Stat head to head which aided us heavily for finding out the statistics we needed and wanted to use.
 
-
+Initially, I had used an absolute path to load the data into R Studio, but I had realized that anyone who was accessing this program outside of my computer were unable to run the program since the files were connected to my computer absolutely. I had realized this mistake and now made my path relative so now anyone with the source files can access the data. 
 
 
 
