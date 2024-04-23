@@ -87,6 +87,25 @@ Basketball Reference was launched in April of 2004 by Justin Kubatko. The primar
 * Game scores (GameScores)
 
 # Explore intuition related to the research question
+```{r}
+glimpse(LebronPerGame)
+LebronTotals
+LebronAdvanced
+LebronPer100Poss
+LebronAllStarGames
+JordanPerGame
+JordanTotals
+JordanAdvanced
+JordanPer100Poss
+JordanAllStarGames
+LebronVJordanPlayoffTotals
+```
+
+
+
+
+
+
 
 # 1. Comparing Lebron and Jordans total and per-game stats
 ## Bargraph showcasing a comparison of per game-stats
