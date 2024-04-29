@@ -68,6 +68,9 @@ head(JordanPer100Poss, 5)
 head(JordanAllStarGames, 5)
 head(LebronVJordanPlayoffTotals, 5)
 ```
+# Introduction into our guiding question: Who is the greatest basketball player of all time?
+In the realm of basketball history, the debate over who is this greatest player of all time changes from era to era with Michael Jordan and LeBron James know sitting at the center of this discourse. As we glimpse through decades of NBA history and basketball statistics, our goal isn't just to compare these titans of basketball but to make a compelling argument as for why LeBron James edges out Michael Jordan for being the greatest player of all time. From examining metrics like points per game and assists to more insightful stats like efficiency ratings and win shares, we dive deep to gain a comprehensive look into their careers.
+
 # Comparing Lebron and Jordan's Per-Game Stats:
 ```{r}
 LebronStatsPerGame <- LebronTotals %>%
@@ -150,7 +153,7 @@ print(StatsComparison)
 ```
 LeBron James has put up some jaw-dropping numbers over his 21-year NBA career: 40,474 points, 11,009 assists, and 11,185 rebounds, solidifying his status as one of the sport’s most productive and adaptable players. His scoring is especially remarkable, having recently surpassed Kareem Abdul-Jabbar to become the all-time leading scorer. Additionally, LeBron is fourth in total assists, showcasing his ability to both score and set up plays. Comparatively, Michael Jordan, in his 15-year career, accumulated 32,292 points, 5,633 assists, and 6,672 rebounds. Jordan’s scoring ability is legendary, but his assists and rebounds are noticeably lower than LeBron's, leaving him outside the top ranks in these areas. Even though LeBron has played six more seasons than Jordan, his continued excellence is undeniable. At 39 years old, he still averages 27 points per game. Jordan, on the other hand, retired at 39, largely due to declining performance, underscoring the enduring impact and longevity of LeBron’s impressive career.
 
-# Comparing Lebron and Jordan's Theoretical Playoff Stats
+# Comparing Lebron and Jordan's Theoretical Playoff Stats:
 ```{r}
 LebronVJordanPlayoffTotals <- data.frame(
   Player = c(rep("LeBron James", 10), rep("Michael Jordan", 10)), 
@@ -195,9 +198,9 @@ StatsComparisonLong %>%
 
 print(StatsComparisonLong)
 ```
-(X)
+This density plot compares LeBrons playoff career averages with Michael Jordans with stats like points per game, assists, and total rebounds per game. The plot shuffles through Jordans and LeBrons careers and grabs playoff stats from each per players per game averages for a certain season and puts them in a best of 10 playoff series against one another. Each time this plot runs it shows different stats for Jordan and LeBron throughout their careers. We see that majority of the time LeBron edges out over Michael Jordan because he simply just has better career averages in the playoffs.
 
-# Comparing Lebron and Jordan's Longevity
+# Comparing Lebron and Jordan's Longevity:
 ```{r}
 convert_percentage <- function(perc) {
   as.numeric(gsub("%", "", perc)) / 100
@@ -244,9 +247,7 @@ CombinedDataLonger %>%
 
 print(CombinedDataLonger)
 ```
-(X)
 
-# Comparing Lebron and Jordan's Player Performance Analysis
 ```{r}
 convert_percentage <- function(perc) {
   as.numeric(sub("%", "", perc))
@@ -278,7 +279,7 @@ CombinedDataLonger %>%
   scale_color_hue(direction = 1) +
   theme_minimal() +
   facet_wrap(~Statistic, scales = "free_y") +
-  labs(title = "Player Performance Analysis", 
+  labs(title = "Longevity Analysis: LeBron James vs Michael Jordan", 
        subtitle = "Comparison of LeBron James and Michael Jordan", 
        x = "Player Name", y = "Value") +
   theme(text = element_text(size = 12), 
@@ -289,9 +290,9 @@ CombinedDataLonger %>%
 
 print(CombinedDataLonger)
 ```
-This graph compares LeBron and Jordans efficiency ratings over the course of their careers when comparing their turnover percentages to their scoring ability. The graph shows that LeBrons per 100 possessions stats makes LeBron a more efficient player.
+For this two plots, we are comparing advanced stats for LeBron James and Michael Jordan. Win shares and true shooting percentage are some very insightful statistics not many basketball fans pay attention to as much. Win shares represents the number of wins contributed by that player and it reveals to us how valuable that player truly is to the team. True shooting percentage provides a more accurate measure of a players shooting efficiency. The stat incorporates all forms scoring that contributes to a players total points. When it comes to LeBron and Jordan, we see LeBron being the more efficient shooter.    
 
-# Comparing Lebron and Jordan's Personal Efficiency Rating At Ages 30+
+# Comparing Lebron and Jordan's Personal Efficiency Rating At Ages 30+:
 ```{r}
 OldBron <- LebronPer100Poss %>%
   filter(Season >= "2014-15") %>%
@@ -328,9 +329,6 @@ OldComp %>%
 
 print(OldComp)
 ```
-(X)
-
-# Comparing Lebron and Jordan's Personal Efficiency Rating At Ages 30+ Each Season
 ```{r}
 OldBron <- LebronPer100Poss %>%
   filter(Season > "2014-15") %>%
@@ -380,7 +378,7 @@ ggplot(OldComp, aes(x = Season, y = PER, color = Player, group = Player)) +
 
 print(OldComp)
 ```
-This bar graph compares Michael Jordan and LeBrons efficiency's per 100 possessions at age 30 plus. We can clearly see the longevity LeBron holds. When comparing points, assists, rebounds,field goal percentages, and turnover rate, we see that LeBron dominates. At age 39 LeBron is still considered a top player in the NBA while Jordan was a dwindling old man expiring in his puny body.
+Both of these plots compare Michael Jordan and LeBrons efficiency's per 100 possessions at age 30 plus. We can clearly see the longevity LeBron holds. When comparing points, assists, rebounds,field goal percentages, and turnover rate, we see that LeBron dominates. At age 39 LeBron is still considered a top player in the NBA while Jordan was a dwindling old man expiring in his puny body.
 
 # Comparing Total All Star Appearences
 ```{r}
@@ -426,13 +424,13 @@ When it comes to All-Star game appearences Lebron has been slected to one every 
 # Conclusion
 Key insight/takeaway about research question - Summarize the key insight, takeaway, conclusion to the research question that motivated your analysis
 
-While studying our data comparing LeBron and Jordan we found that the GOAT debate is closer than we originally thought it was when viewed from a statistical perspective. We couldn’t really conclude who was the greatest player ever with some of the most insightful basketball stats, there were strong cases for both. But because basketball is just more than statistics, a visual eye test might also help you sway a certain direction with who you think is the greatest basketball player of all time. We will still go with LeBron as our GOAT. 
+While studying our data comparing LeBron and Jordan we found that the GOAT debate is closer than we originally thought it was when viewed from a statistical perspective. We couldn’t really conclude who was the greatest player ever with some of the most insightful basketball stats, there were strong cases for both. But because basketball is just more than statistics, a visual eye test might also help you sway a certain direction with who you think is the greatest basketball player of all time. We will still go with LeBron as who we consider the greatest basketball player of all time. 
 
 Challenge Encountered - Describe the biggest challenge that you encountered and how you overcame it in the project.
 
 The biggest challenge we faced was finding relevant data sources. All the data sources off of Kaggle were old when it comes to finding LeBron's stats. Lebron is still currently playing so we needed up to date statistics while everything on Kaggle was over 5 years behind. We came across the websites basketball reference and Stat head to head which aided us heavily for finding out the statistics we needed and wanted to use.
 
-Initially, I had used an absolute path to load the data into R Studio, but I had realized that anyone who was accessing this program outside of my computer were unable to run the program since the files were connected to my computer absolutely. I had realized this mistake and now made my path relative so now anyone with the source files can access the data. 
+Initially, we had used an absolute path to load the data into R Studio, but then realized that anyone who was accessing this program outside of our computers were unable to run the program since the files were connected to our computers absolutely. We had realized this mistake and now made the paths relative so now anyone with the source files can access the data. 
 
 
 
