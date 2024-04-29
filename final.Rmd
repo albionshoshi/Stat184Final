@@ -1,5 +1,5 @@
 ---
-title: "Jordan V. Lebron"
+title: "Jordan Vs. Lebron"
 author: "Xiang Jiang and Albion Shoshi"
 date: "April 5, 2024"
 output: pdf_document
@@ -52,41 +52,9 @@ JordanAllStarGames <- read_csv('./JordanNew/JordanAllStarGame.csv')
 # # Link: https://stathead.com/basketball/vs/lebron-james-vs-michael-jordan#coverage_note
 LebronVJordanPlayoffTotals <- read_csv('./LebronVJordanPlayoffTotals.csv')
 ```
-# Guiding Question: 
-* Who is the Greatest Basketball Player of All Time in NBA History, Lebron or Jordan?
 
-# Become acquainted with your data sources:
-## Where did you find them?
-* Data retrieved from BasketBall Reference.
-
-## Who collected/maintains them?
-* Sean Lahman donated much of the initial data.
-* Chip Hart and Kevin Cohen provided input on the site's design and data collection, respectively.
-* Tom Timmerman, Dick Pfander, Todd Spehr, Matt Shuh, Justin Kubatko, Sean Burrill, Tariq Jabbar, Mike Lynch, Michael Hamel, Mark Montieth, and Robert Bradley have all contributed significantly to the collection of NBA and ABA data.
-* Matthew Maurer, an NBA Draft historian, has supplied information on the NBA Draft.
-
-## When & Why were they originally collected?
-Basketball Reference was launched in April of 2004 by Justin Kubatko. The primary goal was to create a comprehensive database that tracks basketball information. This encompasses player statistics, team performances, game results, and much more, making it an invaluable resource for fans, analysts, and researchers interested in the sport's history and current events.
-
-## What does a case represent in each data source, and how many total cases are available?
-* For player statistics, each row or case represents a season's worth of performance data for that player.
-* Game logs would treat each game as a case.
-* Draft data entries represent individual players selected in the NBA draft.
-* There are thousands of cases covering decades of basketball history across the NBA and ABA.
-
-## What are some of the variables that you plan to use?
-* Points per game (PointsPerGame)
-* Assists per game (AssistsPerGame) 
-* Rebounds per game (ReboundsPerGame)
-* Total Points (TotalPoints)
-* Total Assists (TotalAssists)
-* Total Rebounds (TotalRebounds)
-* Player efficiency rating (PlayerEfficiencyRating)
-* Career achievements (CareerAchievements)
-* All-star game appearances (AllStarGameAppearances)
-* Game scores (GameScores)
-
-# Initial View of Original Data
+## Data Access
+Below are the imported data, inspected with head():
 ```{r}
 head(LebronPerGame, 5)
 head(LebronTotals, 5)
@@ -100,64 +68,94 @@ head(JordanPer100Poss, 5)
 head(JordanAllStarGames, 5)
 head(LebronVJordanPlayoffTotals, 5)
 ```
-# Explore intuition related to the research question
-# 1. Comparing Lebron and Jordans total and per-game stats
-## Bargraph showcasing a comparison of per game-stats
+# Comparing Lebron and Jordan's Per-Game Stats:
 ```{r}
 LebronStatsPerGame <- LebronTotals %>%
-  summarise(Player = "Lebron James", AssistsPerGame = sum(AST, na.rm = TRUE) / sum(G, na.rm = TRUE), ReboundsPerGame = sum(TRB, na.rm = TRUE) / sum(G, na.rm = TRUE), PointsPerGame = sum(PTS, na.rm = TRUE) / sum(G, na.rm = TRUE))
+  summarise(Player = "Lebron James", AssistsPerGame = sum(AST, na.rm = TRUE) / sum(G, na.rm = TRUE), 
+            ReboundsPerGame = sum(TRB, na.rm = TRUE) / sum(G, na.rm = TRUE), 
+            PointsPerGame = sum(PTS, na.rm = TRUE) / sum(G, na.rm = TRUE))
 
 JordanStatsPerGame <- JordanTotals %>%
-  summarise(Player = "Michael Jordan", AssistsPerGame = sum(AST, na.rm = TRUE) / sum(G, na.rm = TRUE), ReboundsPerGame = sum(TRB, na.rm = TRUE) / sum(G, na.rm = TRUE), PointsPerGame = sum(PTS, na.rm = TRUE) / sum(G, na.rm = TRUE))
+  summarise(Player = "Michael Jordan", AssistsPerGame = sum(AST, na.rm = TRUE) / sum(G, na.rm = TRUE), 
+            ReboundsPerGame = sum(TRB, na.rm = TRUE) / sum(G, na.rm = TRUE), 
+            PointsPerGame = sum(PTS, na.rm = TRUE) / sum(G, na.rm = TRUE))
 
 StatsComparison <- bind_rows(LebronStatsPerGame, JordanStatsPerGame)
 
 StatsComparisonLong <- StatsComparison %>%
-  pivot_longer(cols = c(AssistsPerGame, ReboundsPerGame, PointsPerGame), names_to = "Statistic", values_to = "Value")
+  pivot_longer(cols = c(AssistsPerGame, ReboundsPerGame, 
+                        PointsPerGame), names_to = "Statistic", values_to = "Value")
 
-ggplot(StatsComparisonLong, aes(x = Statistic, y = Value, fill = Player)) +
+StatsComparisonLong %>%
+  ggplot(aes(x = Statistic, y = Value, fill = Player)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6, alpha = 0.6) +
+  geom_text(aes(label = round(Value, 1)), 
+            position = position_dodge(width = 0.7), vjust = -0.3, size = 3.5) +
   theme_minimal() +
-  labs(title = "Comparison of Per Game Statistics", subtitle = "LeBron James vs. Michael Jordan", x = "Category", y = "Per Game Average", fill = "Player") +
+  labs(title = "Comparison of Per Game Statistics", 
+       subtitle = "LeBron James vs. Michael Jordan", 
+       x = "Statistic", 
+       y = "Average per Game", 
+       fill = "Player") +
   scale_fill_manual(values = c("Lebron James" = "#BB99FF", "Michael Jordan" = "#9999FF")) +
-  theme(text = element_text(size = 12), legend.position = "bottom", plot.title = element_text(size = 16, face = "bold"), plot.subtitle = element_text(size = 14), axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(text = element_text(size = 12), legend.position = "bottom", 
+        plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14), 
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylim(0, 40)
 
 print(StatsComparisonLong)
 ```
-LeBron has averaged 27.1 points, 7.4 assists, and 7.5 rebounds per game over the course of his 21 year career. Jordan has averaged 30.1 points, 5.3 assists, and 6.2 rebounds over the course of his 15 year career. Even though Jordan has averaged a higher amount of points, LeBron was never seen as a scorer. LeBron was known for his playmaking and getting his team involved (We can see that with the 7.4 assists), while Jordan was predominantly known as a prolific scorer.
+Over his epic 21-year career, LeBron James has racked up averages of 27.1 points, 7.4 assists, and 7.5 rebounds per game, proving his all-around skills on the court. LeBron isn't just known for putting points on the board; he's also a standout because of his ability to set up his teammates, evidenced by his impressive assists average. This part of his game really bolsters his image as not just a scorer, but a dynamic leader and player. On the other side, Michael Jordan, during his 15 years in the league, had averages of 30.1 points, 5.3 assists, and 6.2 rebounds per game. These numbers have cemented him as one of the top scorers in basketball history. Jordan's scoring, driven by his phenomenal athleticism, finesse, and clutch plays, usually grabbed the headlines, sometimes making it easy to overlook his playmaking abilities. While Jordan definitely influenced the game in numerous ways, he's mainly remembered for his scoring prowess. So, while Jordan's higher scoring average points to his scoring supremacy, LeBron’s ability to mix scoring with playmaking underlines his versatility and extensive influence on the game.
 
-## Bargraph showcasing a comparison of total stats
+# Comparing Lebron and Jordan's Total Game Stats:
 ```{r}
 LebronTotalsStats <- LebronTotals %>%
-  summarise(Player = "Lebron James", TotalRebounds = sum(TRB, na.rm = TRUE), TotalAssists = sum(AST, na.rm = TRUE), TotalPoints = sum(PTS, na.rm = TRUE))
+  summarise(Player = "Lebron James", TotalRebounds = sum(TRB, na.rm = TRUE), 
+            TotalAssists = sum(AST, na.rm = TRUE), 
+            TotalPoints = sum(PTS, na.rm = TRUE))
 
 JordanTotalsStats <- JordanTotals %>%
-  summarise(Player = "Michael Jordan", TotalRebounds = sum(TRB, na.rm = TRUE), TotalAssists = sum(AST, na.rm = TRUE), TotalPoints = sum(PTS, na.rm = TRUE))
+  summarise(Player = "Michael Jordan", TotalRebounds = sum(TRB, na.rm = TRUE), 
+            TotalAssists = sum(AST, na.rm = TRUE), 
+            TotalPoints = sum(PTS, na.rm = TRUE))
 
 StatsComparison <- bind_rows(LebronTotalsStats, JordanTotalsStats)
 
 StatsComparisonLong <- StatsComparison %>%
-  pivot_longer(cols = c(TotalRebounds, TotalAssists, TotalPoints), names_to = "Statistic", values_to = "Value")
+  pivot_longer(cols = c(TotalRebounds, TotalAssists, TotalPoints),
+               names_to = "Statistic", values_to = "Value")
 
-ggplot(StatsComparisonLong, aes(x = Statistic, y = Value, fill = Player)) +
+StatsComparisonLong %>%
+  ggplot(aes(x = Statistic, y = Value, fill = Player)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6, alpha = 0.6) +
+  geom_text(aes(label = round(Value, 1)), 
+            position = position_dodge(width = 0.7), vjust = -0.3, size = 3.5) +
   theme_minimal() +
-  labs(title = "Comparison of Total Career Statistics", subtitle = "LeBron James vs. Michael Jordan", x = "Statistic", y = "Total", fill = "Player") +
-  scale_fill_manual(values = c("Lebron James" = "#AD7FA8", "Michael Jordan" = "#729FCF")) +
-  theme(text = element_text(size = 12), axis.title = element_text(size = 16), axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "bottom")
+  labs(title = "Comparison of Total Career Statistics", 
+       subtitle = "LeBron James vs. Michael Jordan", 
+       x = "Statistic", 
+       y = "Total", 
+       fill = "Player") +
+  scale_fill_manual(values = c("Lebron James" = "#BB99FF", "Michael Jordan" = "#9999FF")) +
+  theme(text = element_text(size = 12), 
+        axis.title = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        legend.position = "bottom", 
+        plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14)) + 
+  ylim(0, 50000)
 
 print(StatsComparison)
 ```
-LeBron over the course of his 21 years has accumulated 40,474 points, 11,009 assists, and 11,185 total rebounds. Jordan in his 15 years in the league has totaled 32,292 points, 5,633 assists, and 6,672 total rebounds. LeBron has just overtaken Kareem as the all time leading scorer and sits in 4th place for total all time assists while Jordan barely breaks the top five for points and has nowhere near the rebounds and assists to be a leader in the stat. Even though LeBron has played 6 more seasons than Jordan, he is currently putting up 27 points per game for his entire career including this current year at 39 years old. Jordan had to retire at 39 because he was such a liability as a player.
+LeBron James has put up some jaw-dropping numbers over his 21-year NBA career: 40,474 points, 11,009 assists, and 11,185 rebounds, solidifying his status as one of the sport’s most productive and adaptable players. His scoring is especially remarkable, having recently surpassed Kareem Abdul-Jabbar to become the all-time leading scorer. Additionally, LeBron is fourth in total assists, showcasing his ability to both score and set up plays. Comparatively, Michael Jordan, in his 15-year career, accumulated 32,292 points, 5,633 assists, and 6,672 rebounds. Jordan’s scoring ability is legendary, but his assists and rebounds are noticeably lower than LeBron's, leaving him outside the top ranks in these areas. Even though LeBron has played six more seasons than Jordan, his continued excellence is undeniable. At 39 years old, he still averages 27 points per game. Jordan, on the other hand, retired at 39, largely due to declining performance, underscoring the enduring impact and longevity of LeBron’s impressive career.
 
-## Density Plot showcasing Lebron and Jordan Playoff Totals
+# Comparing Lebron and Jordan's Theoretical Playoff Stats
 ```{r}
 LebronVJordanPlayoffTotals <- data.frame(
-  Player = c(rep("LeBron James", 10), rep("Michael Jordan", 10)),
-  TRB = round(runif(20, 5, 15)),
-  AST = round(runif(20, 5, 15)), 
-  PTS = round(runif(20, 20, 40))
-)
+  Player = c(rep("LeBron James", 10), rep("Michael Jordan", 10)), 
+  TRB = round(runif(20, 5, 15)), AST = round(runif(20, 5, 15)), 
+  PTS = round(runif(20, 20, 40)))
 
 PlayOffBron <- LebronVJordanPlayoffTotals %>%
   filter(Player == "LeBron James") %>%
@@ -178,96 +176,254 @@ StatsComparison <- bind_rows(PlayOffBron, PlayOffJordan)
 StatsComparisonLong <- StatsComparison %>%
   pivot_longer(cols = -Player, names_to = "Statistic", values_to = "Value")
 
-ggplot(StatsComparisonLong, aes(x = Value, fill = Player)) +
+StatsComparisonLong %>%
+  ggplot(aes(x = Value, fill = Player)) +
   geom_density(alpha = 0.6) +
-  labs(title = "Playoff Stats Density Comparison: LeBron James vs. Michael Jordan", x = "Value", y = "Density", fill = "Player") +
+  labs(title = "Playoff Stats Density Comparison: LeBron James vs. Michael Jordan", 
+       x = "Value", 
+       y = "Density", 
+       fill = "Player") +
   theme_minimal() +
-  scale_fill_manual(values = c("LeBron James" = "#E63B11", "Michael Jordan" = "#B6DFF7")) +
+  theme(text = element_text(size = 12), 
+        axis.title = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        legend.position = "bottom", 
+        plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14)) + 
+  scale_fill_manual(values = c("LeBron James" = "#BB99FF", "Michael Jordan" = "#B6DFF7")) + 
   theme(legend.position = "bottom")
 
 print(StatsComparisonLong)
 ```
-Throughout LeBrons 21 year career he has made the playoffs 16 times while Jordan during his 15 year career managed to make the playoffs only 13 times. LeBron cleary dominates in the stats we are observing, points, assists, and total rebounds. Even though LeBron has played 3 more years in the playoffs, he has double the amount of assists and rebounds while also having 2,000 more points than Jordan. LeBron in his 16 playoff years has been to the finals 10 times compared to only 6 from Jordan. LeBron had more room to increase his stats because he was able to make it past all the tough teams in his division to reach the finals, while Jordan has been seen as a first round exit in the years he didn't make the finals.
+(X)
 
-# 2. Using Advanced and Per100Poss stats for comparison
-## Player Performance Analysis 
+# Comparing Lebron and Jordan's Longevity
+```{r}
+convert_percentage <- function(perc) {
+  as.numeric(gsub("%", "", perc)) / 100
+}
+
+LebronLongevity <- LebronAdvanced %>%
+  mutate(PlayerName = "LeBron James", Games = as.integer(G), 
+         TrueShootingPercentage = convert_percentage(`TS%`), 
+         WinShare = as.numeric(WS), 
+         ValueOverReplacementPlayer = as.numeric(VORP)) %>%
+  select(PlayerName, Season, Games, TrueShootingPercentage, 
+         WinShare, ValueOverReplacementPlayer)
+
+JordanLongevity <- JordanAdvanced %>%
+  mutate(PlayerName = "Michael Jordan", Games = as.integer(G), 
+         TrueShootingPercentage = convert_percentage(`TS%`), 
+         WinShare = as.numeric(WS), 
+         ValueOverReplacementPlayer = as.numeric(VORP)) %>%
+  select(PlayerName, Season, Games, TrueShootingPercentage, 
+         WinShare, ValueOverReplacementPlayer)
+
+CombinedData <- bind_rows(LebronLongevity, JordanLongevity)
+
+CombinedDataLonger <- CombinedData %>%
+  pivot_longer(cols = c(Games, TrueShootingPercentage, WinShare), 
+               names_to = "Statistic", values_to = "Value")
+
+CombinedDataLonger %>%
+  ggplot(aes(x = Season, y = Value, color = PlayerName)) +
+  geom_point(aes(shape = PlayerName), size = 3, 
+             position = position_jitterdodge()) +
+  geom_line(aes(group = PlayerName), alpha = 0.5) + 
+  scale_color_manual(values = c("LeBron James" = "#BB99FF", "Michael Jordan" = "#B6DFF7")) +
+  facet_wrap(~Statistic, scales = "free_y") +
+  labs(title = "Longevity Analysis: LeBron James vs Michael Jordan", 
+       subtitle = "Statistical comparison across different seasons", 
+       x = "Season", y = "Value") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), 
+        axis.title = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "bottom", plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14))
+
+print(CombinedDataLonger)
+```
+(X)
+
+# Comparing Lebron and Jordan's Player Performance Analysis
 ```{r}
 convert_percentage <- function(perc) {
   as.numeric(sub("%", "", perc))
 }
 
 LebronLongevity <- LebronAdvanced %>%
-  mutate(PlayerName = "Lebron James", Games = G, TrueShootingPercentage = convert_percentage(`TS%`), WinShare = WS, ValueOverReplacementPlayer = VORP) %>%
-  select(PlayerName, Season, Games, TrueShootingPercentage, WinShare, ValueOverReplacementPlayer)
+  mutate(PlayerName = "Lebron James", Games = G, 
+         TrueShootingPercentage = convert_percentage(`TS%`), 
+         WinShare = WS, ValueOverReplacementPlayer = VORP) %>%
+  select(PlayerName, Season, Games, TrueShootingPercentage, 
+         WinShare, ValueOverReplacementPlayer)
 
 JordanLongevity <- JordanAdvanced %>%
-  mutate(PlayerName = "Michael Jordan", Games = G, TrueShootingPercentage = convert_percentage(`TS%`), WinShare = WS, ValueOverReplacementPlayer = VORP) %>%
-  select(PlayerName, Season, Games, TrueShootingPercentage, WinShare, ValueOverReplacementPlayer)
+  mutate(PlayerName = "Michael Jordan", Games = G, 
+         TrueShootingPercentage = convert_percentage(`TS%`), 
+         WinShare = WS, ValueOverReplacementPlayer = VORP) %>%
+  select(PlayerName, Season, Games, TrueShootingPercentage, 
+         WinShare, ValueOverReplacementPlayer)
 
 CombinedData <- bind_rows(LebronLongevity, JordanLongevity)
 
 CombinedDataLonger <- CombinedData %>%
-  pivot_longer(cols = c(Games, TrueShootingPercentage, WinShare), names_to = "Statistic", values_to = "Value")
+  pivot_longer(cols = c(Games, TrueShootingPercentage, WinShare), 
+               names_to = "Statistic", values_to = "Value")
 
-ggplot(CombinedDataLonger, aes(x = PlayerName, y = Value, color = PlayerName)) +
+CombinedDataLonger %>%
+  ggplot(aes(x = PlayerName, y = Value, color = PlayerName)) +
   geom_point(shape = 21, size = 3) +
   scale_color_hue(direction = 1) +
   theme_minimal() +
   facet_wrap(~Statistic, scales = "free_y") +
-  labs(title = "Player Performance Analysis", subtitle = "Comparison of LeBron James and Michael Jordan", x = "Player Name", y = "Value") +
-  theme(text = element_text(size = 12), axis.title = element_text(size = 16), axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "bottom")
+  labs(title = "Player Performance Analysis", 
+       subtitle = "Comparison of LeBron James and Michael Jordan", 
+       x = "Player Name", y = "Value") +
+  theme(text = element_text(size = 12), 
+        axis.title = element_text(size = 16),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        legend.position = "bottom", plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14))
 
 print(CombinedDataLonger)
 ```
-
 This graph compares LeBron and Jordans efficiency ratings over the course of their careers when comparing their turnover percentages to their scoring ability. The graph shows that LeBrons per 100 possessions stats makes LeBron a more efficient player.
 
-# 3. Showcasing and comparing LeBron and Jordans Legacys
-## Barpgraph that shows LeBron and Jordans Effeciency ratings above age 30
+# Comparing Lebron and Jordan's Personal Efficiency Rating At Ages 30+
 ```{r}
 OldBron <- LebronPer100Poss %>%
-  filter(Season > "2014-15") %>%
-  mutate(PER = (PTS + TRB + AST + STL + BLK - ((FGA - FG) + (FTA - FT) + TOV)) / G, Player = "Lebron James")
+  filter(Season >= "2014-15") %>%
+  mutate(PER = (PTS + TRB + AST + STL + BLK - ((FGA - FG) + (FTA - FT) + TOV)) / G, 
+         Player = "LeBron James")
 
 OldJordan <- JordanPer100Poss %>%
-  filter(Season > "1994-95")  %>%
-  mutate(PER = (PTS + TRB + AST + STL + BLK - ((FGA - FG) + (FTA - FT) + TOV)) / G, Player = "Michael Jordan")
+  filter(Season >= "1995-96") %>%
+  mutate(PER = (PTS + TRB + AST + STL + BLK - ((FGA - FG) + (FTA - FT) + TOV)) / G, 
+         Player = "Michael Jordan")
 
 OldComp <- bind_rows(OldBron, OldJordan) %>%
   select(Player, everything())
 
-ggplot(OldComp, aes(x = Player, y = PER, fill = Player)) +
+maxPER <- OldComp %>%
+  group_by(Player) %>%
+  summarize(MaxPER = max(PER))
+
+OldComp %>%
+  ggplot(aes(x = Player, y = PER, fill = Player)) +
   geom_bar(stat = "identity", position = position_dodge(), width = 0.5) +
+  geom_text(data = maxPER, aes(label = sprintf("%.2f", MaxPER), y = MaxPER), 
+            position = position_dodge(width = 0.5), vjust = -0.5, size = 3.5) +
   theme_minimal() +
-  labs(title = "Efficiency Per 100 Possessions at Age 30 Plus", subtitle = "LeBron James vs. Michael Jordan", x = "", y = "Average Efficiency Per 100 Possessions", fill = "Player") +
-  scale_fill_manual(values = c("Lebron James" = "#AD7FA8", "Michael Jordan" = "#729FCF")) +
-  theme(text = element_text(size = 16), plot.title = element_text(size = 16, face = "bold"), plot.subtitle = element_text(size = 14))
+  labs(title = "Efficiency Per 100 Possessions at Age 30+", 
+       subtitle = "Comparative Analysis: LeBron James vs. Michael Jordan", 
+       x = "", y = "Average Efficiency Per 100 Possessions", fill = "Player") +
+  scale_fill_manual(values = c("LeBron James" = "#BB99FF", "Michael Jordan" = "#B6DFF7")) +
+  theme(text = element_text(size = 12), axis.title = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        legend.position = "bottom", plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14)) +
+  ylim(0, 1)
+
+print(OldComp)
+```
+(X)
+
+# Comparing Lebron and Jordan's Personal Efficiency Rating At Ages 30+ Each Season
+```{r}
+OldBron <- LebronPer100Poss %>%
+  filter(Season > "2014-15") %>%
+  mutate(PER = (PTS + TRB + AST + STL + BLK - ((FGA - FG) + (FTA - FT) + TOV)) / G, 
+         Player = "LeBron James",
+         Season = as.numeric(substr(Season, 1, 4))) %>%
+  select(Player, Season, PER)
+
+OldJordan <- JordanPer100Poss %>%
+  filter(Season > "1994-95") %>%
+  mutate(PER = (PTS + TRB + AST + STL + BLK - ((FGA - FG) + (FTA - FT) + TOV)) / G, 
+         Player = "Michael Jordan",
+         Season = as.numeric(substr(Season, 1, 4))) %>%
+  select(Player, Season, PER)
+
+OldComp <- bind_rows(OldBron, OldJordan)
+
+HighestPERLebron <- OldBron %>% filter(PER == max(PER))
+LowestPERLebron <- OldBron %>% filter(PER == min(PER))
+HighestPERJordan <- OldJordan %>% filter(PER == max(PER))
+LowestPERJordan <- OldJordan %>% filter(PER == min(PER))
+
+ggplot(OldComp, aes(x = Season, y = PER, color = Player, group = Player)) +
+  geom_line() +
+  geom_point(size = 3) +
+  geom_smooth(method = "loess", se = FALSE, color = "black", size = 1) +
+  geom_text(data = HighestPERLebron, aes(label = sprintf("Highest: %.1f", PER)),
+            hjust = -0.2, vjust = 2, size = 3.5) +
+  geom_text(data = LowestPERLebron, aes(label = sprintf("Lowest: %.1f", PER)),
+            hjust = -0.2, vjust = 2, size = 3.5) +
+  geom_text(data = HighestPERJordan, aes(label = sprintf("Highest: %.1f", PER)), 
+            hjust = 1.2, vjust = -1, size = 3.5) +
+  geom_text(data = LowestPERJordan, aes(label = sprintf("Lowest: %.1f", PER)), 
+            hjust = 1.2, vjust = -1, size = 3.5) +  
+  scale_color_manual(values = c("LeBron James" = "#BB99FF", "Michael Jordan" = "#B6DFF7")) +
+  labs(title = "Efficiency Per 100 Possessions at Age 30 Plus",
+       subtitle = "LeBron James vs. Michael Jordan", 
+       x = "Season (Year)", y = "Average Efficiency Per 100 Possessions", 
+       color = "Player") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), axis.title = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        legend.position = "bottom", plot.title = element_text(size = 16, face = "bold"),
+        plot.subtitle = element_text(size = 14)) +
+  ylim(0, 1) +
+  xlim(1990, 2025)
 
 print(OldComp)
 ```
 This bar graph compares Michael Jordan and LeBrons efficiency's per 100 possessions at age 30 plus. We can clearly see the longevity LeBron holds. When comparing points, assists, rebounds,field goal percentages, and turnover rate, we see that LeBron dominates. At age 39 LeBron is still considered a top player in the NBA while Jordan was a dwindling old man expiring in his puny body.
 
-## Comparing total all star appearences
+# Comparing Total All Star Appearences
 ```{r}
 LebronAllStarAppearances <- nrow(LebronAllStarGames)
 JordanAllStarAppearances <- nrow(JordanAllStarGames)
 
-AllStarData <- data.frame(Player = c("Lebron James", "Michael Jordan"), Appearances = c(LebronAllStarAppearances, JordanAllStarAppearances))
+AllStarData <- data.frame(Player = c("Lebron James", "Michael Jordan"), 
+                          Appearances = c(LebronAllStarAppearances, JordanAllStarAppearances))
 
-ggplot(AllStarData, aes(x = Player, y = Appearances, fill = Player)) +
-  geom_bar(stat = "identity", position = position_dodge(), width = 0.5) +
+AllStarData$Percentage <- with(AllStarData, Appearances / sum(Appearances) * 100)
+
+ggplot(AllStarData, aes(x = Player, y = Appearances, label = Appearances)) +
+  geom_segment(aes(y = 0, x = Player, yend = Appearances, xend = Player)) +
+  geom_point(size = 5, aes(color = Player)) +
+  scale_color_manual(values = c("Lebron James" = "#BB99FF", "Michael Jordan" = "#B6DFF7")) +
+  geom_text(nudge_y = 1, size = 4, color = "black") +
+  labs(title = "All-Star Game Appearances", 
+       subtitle = "Comparison of LeBron James and Michael Jordan", 
+       x = "", y = "Number of Appearances") +
   theme_minimal() +
-  labs(title = "All-Star Game Appearances", subtitle = "Comparison of LeBron James and Michael Jordan", x = "", y = "Number of Appearances", fill = "Player") +
-  scale_fill_manual(values = c("Lebron James" = "#8829EE", "Michael Jordan" = "#252FF3")) + 
-  theme(text = element_text(size = 16), plot.title = element_text(size = 16, face = "bold"), plot.subtitle = element_text(size = 14))
+  theme(text = element_text(size = 12), axis.title = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        legend.position = "bottom", plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14))
+
+ggplot(AllStarData, aes(x = "", y = Percentage, fill = Player)) +
+  geom_bar(stat = "identity", width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  scale_fill_manual(values = c("Lebron James" = "#BB99FF", "Michael Jordan" = "#B6DFF7")) +
+  labs(title = "All-Star Game Appearances", 
+       subtitle = "Proportional Comparison of LeBron James and Michael Jordan", 
+       x = NULL, y = NULL) +
+  theme_void() +
+  theme(plot.title = element_text(size = 16, face = "bold"), 
+        plot.subtitle = element_text(size = 14)) +
+  geom_text(aes(label = sprintf("%.1f%%", Percentage)), 
+            position = position_stack(vjust = 0.5), color = "white", size = 5)
 
 print(AllStarData)
 ```
-
 When it comes to All-Star game appearences Lebron has been slected to one every season he has played in the NBA and sits at the most all-star selections ever. Jordans 15, although impressive, are expected when you are considered one of the greatest of all time. Lebrons Longevity to be able to make it to an all star game 21 years, even at his current age of 39 is unheard of.
 
 # Conclusion
-
 Key insight/takeaway about research question - Summarize the key insight, takeaway, conclusion to the research question that motivated your analysis
 
 While studying our data comparing LeBron and Jordan we found that the GOAT debate is closer than we originally thought it was when viewed from a statistical perspective. We couldn’t really conclude who was the greatest player ever with some of the most insightful basketball stats, there were strong cases for both. But because basketball is just more than statistics, a visual eye test might also help you sway a certain direction with who you think is the greatest basketball player of all time. We will still go with LeBron as our GOAT. 
